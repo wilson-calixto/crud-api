@@ -1,11 +1,11 @@
 # compiled output
 /dist
-api/dist
+/api/dist
 /node_modules
 /front/node_modules
 /api/node_modules
 /build
-api/dist
+
 
 # Logs
 logs
