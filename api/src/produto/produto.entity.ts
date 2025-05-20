@@ -6,14 +6,14 @@ export class Produto {
   id: number;
 
   @Column()
-  nome: string;
+  name: string;
 
   @Column()
-  descricao: string;
+  description: string;
 
   @Column('int')
-  quantidade: number;
+  qty: number;
 
   @Column('float')
-  preco: number;
+  amount: number;
 }

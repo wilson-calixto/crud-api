@@ -6,10 +6,10 @@ import { Counter } from './features/counter/Counter';
 
 interface Product {
   id: number;
-  nome: string;
-  descricao: string;
-  quantidade: number;
-  preco: number;
+  name: string;
+  description: string;
+  qty: number;
+  amount: number;
 }
 
 async function fetchProducts(): Promise<Product[]> {
@@ -26,23 +26,23 @@ const columns: ColumnsType<Product> = [
   },
   {
     title: 'Nome',
-    dataIndex: 'nome',
-    key: 'nome',
+    dataIndex: 'name',
+    key: 'name',
   },
   {
     title: 'Descrição',
-    dataIndex: 'descricao',
-    key: 'descricao',
+    dataIndex: 'description',
+    key: 'description',
   },
   {
     title: 'Quantidade',
-    dataIndex: 'quantidade',
-    key: 'quantidade',
+    dataIndex: 'qty',
+    key: 'qty',
   },
   {
     title: 'Preço',
-    dataIndex: 'preco',
-    key: 'preco',
+    dataIndex: 'amount',
+    key: 'amount',
     render: (value) => `R$ ${value.toFixed(2)}`,
   },
 ];
