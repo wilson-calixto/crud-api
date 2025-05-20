@@ -5,7 +5,7 @@ api/dist
 /front/node_modules
 /api/node_modules
 /build
-
+api/dist
 
 # Logs
 logs
