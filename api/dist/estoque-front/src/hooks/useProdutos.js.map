@@ -1,1 +1,0 @@
-{"version":3,"file":"useProdutos.js","sourceRoot":"","sources":["../../../../estoque-front/src/hooks/useProdutos.ts"],"names":[],"mappings":";;;AAAA,uDAAiD;AACjD,kDAAgD;AAEzC,MAAM,WAAW,GAAG,GAAG,EAAE;IAC9B,OAAO,IAAA,sBAAQ,EAAC;QACd,QAAQ,EAAE,CAAC,UAAU,CAAC;QACtB,OAAO,EAAE,wBAAW;KACrB,CAAC,CAAC;AACL,CAAC,CAAC;AALW,QAAA,WAAW,eAKtB"}

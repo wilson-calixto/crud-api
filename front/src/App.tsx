@@ -1,49 +1,42 @@
-import { Button, Layout, Table, theme as antdTheme, Spin, Typography } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleTheme } from './features/themeSlice';
-import { RootState } from './app/store';
-import { useProdutos } from './hooks/useProdutos';
+import React from 'react';
+import { useQuery, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-const { Header, Content } = Layout;
+const queryClient = new QueryClient();
+
+
+async function fetchProducts() {
+  const res = await fetch('http://localhost:3000/produtos');
+  if (!res.ok) throw new Error('Erro ao buscar produtos');
+  return res.json();
+}
+
+
+function Posts() {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['post'],
+    queryFn: () => fetchProducts(),
+   })  
+  if (isLoading) return <div>Carregando...</div>;
+  if (error instanceof Error) return <div>Erro: {error.message}</div>;
+
+ 
+  return (
+    <div>
+      <h1>Posts</h1>
+      <ul>
+        {data.map((post: { id: number; title: string }) => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 function App() {
-  const dispatch = useDispatch();
-  const mode = useSelector((state: RootState) => state.theme.mode);
-  const {
-    token: { colorBgContainer },
-  } = antdTheme.useToken();
-
-  const { data, isLoading, isError } = useProdutos();
-
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Header style={{ color: 'white', display: 'flex', justifyContent: 'space-between' }}>
-        <div>📦 Gestão de Estoque</div>
-        <Button onClick={() => dispatch(toggleTheme())}>
-          Mudar para {mode === 'light' ? 'Dark' : 'Light'}
-        </Button>
-      </Header>
-
-      <Content style={{ padding: '1rem', background: colorBgContainer }}>
-        <Typography.Title level={2}>Produtos</Typography.Title>
-
-        {isLoading && <Spin />}
-        {isError && <div>Erro ao carregar produtos</div>}
-
-        {data && (
-          <Table
-            dataSource={data}
-            rowKey="id"
-            columns={[
-              { title: 'Nome', dataIndex: 'nome' },
-              { title: 'Descrição', dataIndex: 'descricao' },
-              { title: 'Quantidade', dataIndex: 'quantidade' },
-              { title: 'Preço', dataIndex: 'preco', render: (p) => `R$ ${p.toFixed(2)}` },
-            ]}
-          />
-        )}
-      </Content>
-    </Layout>
+    <QueryClientProvider client={queryClient}>
+      <Posts />
+    </QueryClientProvider>
   );
 }
 
