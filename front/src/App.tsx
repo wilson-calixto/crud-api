@@ -14,7 +14,7 @@ interface Product {
 
 async function fetchProducts(): Promise<Product[]> {
   const res = await fetch('http://localhost:3000/produtos');
-  if (!res.ok) throw new Error('Erro ao buscar produtos');
+  if (!res.ok) throw new Error('Erro ao buscar produto');
   return res.json();
 }
 
@@ -49,7 +49,7 @@ const columns: ColumnsType<Product> = [
 
 function Posts() {
   const { data, isLoading, error } = useQuery<Product[]>({
-    queryKey: ['produtos'],
+    queryKey: ['produto'],
     queryFn: fetchProducts,
   });
 
@@ -60,7 +60,7 @@ function Posts() {
 
   return (
     <div style={{ padding: 24 }}>
-      <h1>Produtos</h1>
+      <h1>Produto</h1>
       <Table columns={columns} dataSource={data} rowKey="id" pagination={{ pageSize: 5 }} />
       <Counter />
     </div>
