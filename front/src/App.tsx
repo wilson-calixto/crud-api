@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { Table, Skeleton, Alert } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { Counter } from './features/counter/Counter';
+import CreateProductModal from './components/CreateProductModal/CreateProductModal';
+import useRequestedOrdersTab from './hooks/useCreateAndEditProduct';
 
 interface Product {
   id: number;
@@ -53,13 +55,31 @@ function Posts() {
     queryFn: fetchProducts,
   });
 
+  
+  const {
+ 
+    openCreateNewOrder,
+    handleCancelCreateNewOrder,
+    confirmCreateNewOrder, 
+    isLoadingCreateRequestOrder
+   } = useRequestedOrdersTab();
+
+
   if (isLoading) return <Skeleton active />;
   if (error instanceof Error) {
     return <Alert message="Erro" description={error.message} type="error" showIcon />;
   }
 
+
   return (
     <div style={{ padding: 24 }}>
+        <CreateProductModal
+        isOpen={openCreateNewOrder}
+        onCancel={handleCancelCreateNewOrder}
+        onConfirm={confirmCreateNewOrder}
+        loading={isLoadingCreateRequestOrder}        
+      />
+
       <h1>Produto</h1>
       <Table columns={columns} dataSource={data} rowKey="id" pagination={{ pageSize: 5 }} />
       <Counter />
